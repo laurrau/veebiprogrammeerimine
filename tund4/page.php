@@ -1,18 +1,27 @@
 <?php
+//Lisan teise php faili
+  require("fuctions.php"); 
   $firstName = "Tundmatu";
   $lastName = "Kodanik";
+  $fullName = "";
   $Month = date("n");
   //var_dump ($Month);
   //Püüan POST andmed kinni
   //var_dump ($_POST);
   if (isset($_POST["firstName"])){
-	  $firstName = $_POST["firstName"];
-	  }
+	  $firstName = test_input($_POST["firstName"]);
+	}
   if (isset($_POST["lastName"])){
-	  $lastName = $_POST["lastName"];
-	  }
+	  $lastName = test_input($_POST["lastName"]);
+	}
+
+ //väga mõttetu funktsioon
+	function stupidfunction(){
+	$GLOBALS["fullName"] = $GLOBALS["firstName"] . " " .$GLOBALS["lastName"];
+	}
+ stupidfunction();
 ?>
-  ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +47,7 @@
 	<p>Leht 3: <a href="page.php">Page</a>.</p>
 	<hr>
 	
-	<form method = "POST">
+	<form method = "POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		<label>Eesnimi: </label>
 		<input type="text" name="firstName">
 		<label>Perekonnanimi: </label>
@@ -65,6 +74,7 @@
 	<hr>
 	<?php
 		if (isset($_POST["birthYear"])){
+			echo "<h2>" .$fullName ."</h2>";
 			echo "<p>Olete elanud järgnevatel aastatel: </p> \n";
 			echo "<ul> \n";
 				for ($i = $_POST["birthYear"]; $i <= date("Y"); $i ++){
